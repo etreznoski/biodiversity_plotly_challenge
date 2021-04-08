@@ -1,6 +1,6 @@
 d3.json('samples.json').then(data => {
-    const samples = data
-    console.log(samples);
+    
+    console.log(data.names);
 })
 
 function init() {
