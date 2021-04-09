@@ -2,27 +2,27 @@
 d3.json('samples.json').then(data => {
 
     console.log(data);
-    console.log(data.samples[0]);
+    console.log(data.samples[3]);
 
 
-    function init() {
-      let otuIdStr = data.samples[1].otu_ids.toString();
+    function bar() {
+      let otuIdStr = data.samples[3].otu_ids.map(d => d.toString());
       let trace1 = {
-        x: data.samples[1].sample_values,
-        y: `OTU ${otuIdStr},
+        x: data.samples[3].sample_values,
+        y: otuIdStr.map(d => `OTU ${d}`),
         type: "bar",
         orientation: "h",
-        name: data.samples[1].id,
-        text: data.samples[1].otu_labels
+        name: data.samples[3].id,
+        text: data.samples[3].otu_labels
       };
       let data1 = [trace1];
       let layout1 = {
-        title: data.samples[1].id,
-        yaxis: {tickangle: -45,}
+        title: data.samples[3].id,
+        // yaxis: {tickangle: -45,}
 
       };
       Plotly.newPlot('bar', data1, layout1);
 
     }
-    init();
+    bar();
 });
