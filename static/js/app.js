@@ -2,7 +2,6 @@
 d3.json('samples.json').then(data => {
 //variable to hold index
     let i = 0
-    console.log(data.samples);
 //bar chart function
     function bar(i) {
 
@@ -20,7 +19,11 @@ d3.json('samples.json').then(data => {
 
       let data1 = [trace1];
 
-      Plotly.newPlot('bar', data1);
+      let layout1 = {
+        title: data.samples[i].id
+      };
+
+      Plotly.newPlot('bar', data1, layout1);
     }
     //call bar function
     bar(i);
@@ -80,5 +83,24 @@ d3.json('samples.json').then(data => {
       };
     //call demographic info function
     metadataTable(i);
+
+//set up select dropdown, set value to index and text to id number
+  d3.select("#selDataset")
+    .selectAll("option")
+    .data(data.names)
+    .join("option")
+    .attr("value", (d,i) => i)
+    .text(d => d)
+//update function
+  function updatePage () {
+    i = d3.event.target.value
+
+      bar(i);
+      bubble(i);
+      metadataTable(i);
+  }
+//event listener, calls update function
+  d3.select("#selDataset").on("change", updatePage);
+
 
 }).catch(error => console.log(error));
